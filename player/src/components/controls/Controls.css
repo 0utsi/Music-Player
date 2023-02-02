@@ -1,0 +1,93 @@
+/* controls */
+.controls {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	width: 25rem;
+	height: 7rem;
+	border-radius: 0.5rem;
+
+}
+
+.play-pause {
+	width: 4.5rem;
+	height: 4.5rem;
+	border-radius: 50%;
+	background-color: white;
+	border: none;
+	padding: 0;
+	display: block;
+	cursor: pointer;
+	-webkit-box-shadow: 0px 0px 13px 2px rgba(66, 68, 90, 1);
+	-moz-box-shadow: 0px 0px 13px 2px rgba(66, 68, 90, 1);
+	box-shadow: 0px 0px 13px 2px rgba(66, 68, 90, 1);
+}
+
+.play-pause:active{
+	transform: scale(1.05)
+
+}
+.play-pause:hover {
+	transform: scale(1.05);
+	transition: all 0.5s;
+}
+.next {
+	width: 2.5rem;
+	height: 2.5rem;
+	border-radius: 50%;
+	background-color: white;
+	margin-left: 1.2rem;
+	border: none;
+	cursor: pointer;
+	-webkit-box-shadow: 0px 0px 13px 2px rgba(66, 68, 90, 1);
+	-moz-box-shadow: 0px 0px 13px 2px rgba(66, 68, 90, 1);
+	box-shadow: 0px 0px 13px 2px rgba(66, 68, 90, 1);
+}
+
+.previous {
+	width:2.5rem;
+	height: 2.5rem;
+	border-radius: 50%;
+	background-color: white;
+	margin-right: 1.2rem;
+	border: none;
+	cursor: pointer;
+	-webkit-box-shadow: 0px 0px 13px 2px rgba(66, 68, 90, 1);
+	-moz-box-shadow: 0px 0px 13px 2px rgba(66, 68, 90, 1);
+	box-shadow: 0px 0px 13px 2px rgba(66, 68, 90, 1);
+}
+
+.playButton {
+	transform: scale(1.55);
+	opacity: 0.9;
+}
+
+
+
+.nextPrevIcon {
+	transform: scale(0.9);
+	opacity: 0.9;
+}
+
+.main-controls {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.player-footer {
+	width: 100%;
+	padding-left: 1.75rem;
+	padding-right: 1.75rem;
+	margin-bottom: 5rem;
+	margin-top: 1.75rem;
+	display: flex;
+	justify-content: space-around;
+	flex-direction: row;
+}
+
+.footerIcon {
+	transform: scale(1.1)
+}
