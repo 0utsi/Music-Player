@@ -10,18 +10,20 @@
 
 }
 
+/* Buttons */
+
 .play-pause {
 	width: 4.5rem;
 	height: 4.5rem;
 	border-radius: 50%;
-	background-color: white;
+	background-color: rgb(39, 40, 56);;
 	border: none;
 	padding: 0;
 	display: block;
 	cursor: pointer;
-	-webkit-box-shadow: 0px 0px 13px 2px rgba(66, 68, 90, 1);
-	-moz-box-shadow: 0px 0px 13px 2px rgba(66, 68, 90, 1);
-	box-shadow: 0px 0px 13px 2px rgba(66, 68, 90, 1);
+	-webkit-box-shadow: 0px 0px 13px 5px rgba(66, 68, 90, 1);
+	-moz-box-shadow: 0px 0px 13px 5px rgba(66, 68, 90, 1);
+	box-shadow: 0px 0px 13px 5px rgba(66, 68, 90, 1);
 }
 
 .play-pause:active{
@@ -29,45 +31,85 @@
 
 }
 .play-pause:hover {
+	-webkit-box-shadow: 0px 0px 13px 2px white;
+	-moz-box-shadow: 0px 0px 13px 2px white;
+	box-shadow: 0px 0px 13px 2px white;
 	transform: scale(1.05);
+	transition: all 0.5s ease;
+}
+
+.play-pause:hover .playIcon {
+	color: white;
 	transition: all 0.5s;
 }
 .next {
 	width: 2.5rem;
 	height: 2.5rem;
 	border-radius: 50%;
-	background-color: white;
+	background-color: rgb(39, 40, 56);;
 	margin-left: 1.2rem;
 	border: none;
 	cursor: pointer;
-	-webkit-box-shadow: 0px 0px 13px 2px rgba(66, 68, 90, 1);
-	-moz-box-shadow: 0px 0px 13px 2px rgba(66, 68, 90, 1);
-	box-shadow: 0px 0px 13px 2px rgba(66, 68, 90, 1);
+	-webkit-box-shadow: 0px 0px 13px 5px rgba(66, 68, 90, 1);
+	-moz-box-shadow: 0px 0px 13px 5px rgba(66, 68, 90, 1);
+	box-shadow: 0px 0px 13px 5px rgba(66, 68, 90, 1);
+}
+
+.next:hover {
+	-webkit-box-shadow: 0px 0px 13px 1px white;
+	-moz-box-shadow: 0px 0px 13px 1px white;
+	box-shadow: 0px 0px 13px 1px white;
+	transform: scale(1.05);
+	transition: all 0.5s ease;
+}
+
+.next:hover .nextIcon {
+	color: white;
+	transition: all 0.5s;
 }
 
 .previous {
 	width:2.5rem;
 	height: 2.5rem;
 	border-radius: 50%;
-	background-color: white;
+	background-color: rgb(39, 40, 56);
 	margin-right: 1.2rem;
 	border: none;
 	cursor: pointer;
-	-webkit-box-shadow: 0px 0px 13px 2px rgba(66, 68, 90, 1);
-	-moz-box-shadow: 0px 0px 13px 2px rgba(66, 68, 90, 1);
-	box-shadow: 0px 0px 13px 2px rgba(66, 68, 90, 1);
+	-webkit-box-shadow: 0px 0px 13px 5px rgba(66, 68, 90, 1);
+	-moz-box-shadow: 0px 0px 13px 5px rgba(66, 68, 90, 1);
+	box-shadow: 0px 0px 13px 5px rgba(66, 68, 90, 1);
 }
 
-.playButton {
-	transform: scale(1.55);
-	opacity: 0.9;
+.previous:hover {
+	-webkit-box-shadow: 0px 0px 13px 1px white;
+	-moz-box-shadow: 0px 0px 13px 1px white;
+	box-shadow: 0px 0px 13px 1px white;
+	transform: scale(1.05);
+	transition: all 0.5s ease;
 }
 
+.previous:hover .prevIcon {
+	color: white;
+	transition: all 0.5s;
+}
 
-
-.nextPrevIcon {
-	transform: scale(0.9);
+.playIcon {
+	transform: scale(1.8);
 	opacity: 0.9;
+	color:rgba(66, 68, 90, 1);
+}
+
+.prevIcon {
+	transform: scale(1.4);
+	opacity: 0.9;
+	color:rgba(66, 68, 90, 1);
+}
+
+.nextIcon {
+	transform: scale(1.4);
+	opacity: 0.9;
+	color:rgba(66, 68, 90, 1);
 }
 
 .main-controls {
@@ -89,5 +131,6 @@
 }
 
 .footerIcon {
-	transform: scale(1.1)
+	transform: scale(1.1);
+	color: rgb(66, 68, 90);
 }
