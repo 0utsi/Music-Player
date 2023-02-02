@@ -17,19 +17,19 @@ export function Controls(props: any) {
 		<div className="controls">
 			<div className="main-controls">
 				<button className="previous">
-					<FontAwesomeIcon className="nextPrevIcon" icon={faBackward} />
+					<FontAwesomeIcon className="prevIcon" icon={faBackward} />
 				</button>
 				<button className="play-pause" onClick={props.togglePlayPause}>
 					{!props.isPlaying ? (
-						<FontAwesomeIcon className="playButton" icon={faPlay} />
+						<FontAwesomeIcon className="playIcon" icon={faPlay} />
 					) : (
 						props.isPlaying && (
-							<FontAwesomeIcon className="playButton" icon={faPause} />
+							<FontAwesomeIcon className="playIcon" icon={faPause} />
 						)
 					)}
 				</button>
 				<button className="next">
-					<FontAwesomeIcon className="nextPrevIcon" icon={faForward} />
+					<FontAwesomeIcon className="nextIcon" icon={faForward} />
 				</button>
 			</div>
 			<div className="player-footer">

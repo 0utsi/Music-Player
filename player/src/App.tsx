@@ -1,6 +1,6 @@
 import "./App.css";
 import { useState } from "react";
-import { Player } from "./Player";
+import { Player } from "./components/Player";
 
 function App() {
 	const [songs] = useState([
@@ -10,7 +10,6 @@ function App() {
 			album: "Snapshots",
 			track: "3",
 			year: "",
-			img_src: "./songs_images/88 Keys_Cover (front)_e.jpg",
 			src: "./songs/88 Keys.mp3",
 		},
 	]);
