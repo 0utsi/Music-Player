@@ -3,8 +3,10 @@ import typebeat from "../../songs/typeBeat.mp3";
 import "./ProgresBar.css";
 export function ProgresBar(props: any) {
 	const audioElement = useRef<null | HTMLAudioElement>(null);
-	const [duration, setDuration] = useState<number>(0);
 	const [length, setLength] = useState<string>();
+	const [currentTime, setCurrentTime] = useState("0:00");
+	const [now, setNow] = useState(0);
+
 	useEffect(() => {
 		if (props.isPlaying) {
 			audioElement.current!.play();
@@ -12,12 +14,7 @@ export function ProgresBar(props: any) {
 			audioElement.current!.pause();
 		}
 		const duration = audioElement.current!.duration;
-		setDuration(duration);
 		getLength(duration);
-	}, [props.isPlaying]);
-
-	useEffect(() => {
-		console.log(audioElement.current?.duration);
 	}, [props.isPlaying]);
 
 	const getLength = (duration: number) => {
@@ -27,11 +24,39 @@ export function ProgresBar(props: any) {
 		setLength(length);
 	};
 
+	const updateCurrentTime = () => {
+		const minutes = Math.floor(audioElement.current!.currentTime / 60);
+		const seconds = audioElement.current!.currentTime % 60;
+		const formattedTime = `${minutes}:${seconds
+			.toFixed(0)
+			.toString()
+			.padStart(2, "0")}`;
+		setCurrentTime(formattedTime);
+		setNow(audioElement.current!.currentTime);
+	};
+
+	const moveTrack = () => {};
+
 	return (
 		<div className="progresBar">
-			<input type="range" className="volumeControl" />
-			<span className="length">{length}</span>
-			<audio src={typebeat} ref={audioElement}></audio>
+			<input
+				type="range"
+				className="volumeControl"
+				max={length}
+				value={now}
+				onChange={(e) => {
+					console.log(e.target.value);
+				}}
+			/>
+			<div className="length">
+				<span className="currentTime">{currentTime}</span>
+				<span className="length">{length}</span>
+			</div>
+			<audio
+				src={typebeat}
+				ref={audioElement}
+				onTimeUpdate={updateCurrentTime}
+			></audio>
 		</div>
 	);
 }

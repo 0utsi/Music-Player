@@ -97,19 +97,19 @@
 .playIcon {
 	transform: scale(1.8);
 	opacity: 0.9;
-	color:rgba(66, 68, 90, 1);
+	color:rgb(118, 120, 136);
 }
 
 .prevIcon {
 	transform: scale(1.4);
 	opacity: 0.9;
-	color:rgba(66, 68, 90, 1);
+	color:rgb(118, 120, 136);
 }
 
 .nextIcon {
 	transform: scale(1.4);
 	opacity: 0.9;
-	color:rgba(66, 68, 90, 1);
+	color:rgb(118, 120, 136);
 }
 
 .main-controls {
@@ -132,5 +132,12 @@
 
 .footerIcon {
 	transform: scale(1.1);
-	color: rgb(66, 68, 90);
+	color: rgb(118, 120, 136);
+	cursor: pointer;
+}
+
+.footerIcon:hover {
+	transition: all 0.5s;
+	transform: scale(1.1);
+	color: white;
 }
