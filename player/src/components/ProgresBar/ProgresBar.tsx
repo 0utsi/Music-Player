@@ -1,21 +1,21 @@
 import { useEffect, useRef, useState } from "react";
 import typebeat from "../../songs/typeBeat.mp3";
+import lofi from "../../songs/88 Keys.mp3";
 import "./ProgresBar.css";
+
 export function ProgresBar(props: any) {
-	const audioElement = useRef<null | HTMLAudioElement>(null);
+	const audioElement = useRef(audioContext);
+	const [song, setSong] = useState(typebeat);
 	const [length, setLength] = useState<string>();
 	const [currentTime, setCurrentTime] = useState("0:00");
 	const [now, setNow] = useState(0);
 
+	const [audioContext, setAudioContext] = useState(null);
+
 	useEffect(() => {
-		if (props.isPlaying) {
-			audioElement.current!.play();
-		} else {
-			audioElement.current!.pause();
-		}
-		const duration = audioElement.current!.duration;
-		getLength(duration);
-	}, [props.isPlaying]);
+		const newAudioContext = new AudioContext();
+		setAudioContext(newAudioContext);
+	}, []);
 
 	const getLength = (duration: number) => {
 		const min = Math.floor(duration / 60);
@@ -35,7 +35,21 @@ export function ProgresBar(props: any) {
 		setNow(audioElement.current!.currentTime);
 	};
 
-	const moveTrack = () => {};
+	// const playSound = async () => {
+	// 	const audio = new Audio();
+	// 	audio.src = typebeat;
+	// 	const source = audioContext.createMediaElementSource(audio);
+	// 	source.connect(audioContext.destination);
+	// 	audio.play();
+	// };
+
+	useEffect(() => {
+		var audio = new Audio();
+		audio.src = typebeat;
+		const source = audioContext.createMediaElementSource(audio);
+		source.connect(audioContext.destination);
+		audio.play();
+	}, [props.isPlaying]);
 
 	return (
 		<div className="progresBar">
@@ -52,11 +66,6 @@ export function ProgresBar(props: any) {
 				<span className="currentTime">{currentTime}</span>
 				<span className="length">{length}</span>
 			</div>
-			<audio
-				src={typebeat}
-				ref={audioElement}
-				onTimeUpdate={updateCurrentTime}
-			></audio>
 		</div>
 	);
 }
