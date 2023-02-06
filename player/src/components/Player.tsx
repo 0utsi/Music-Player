@@ -7,29 +7,47 @@ import typebeat from "../songs/typeBeat.mp3";
 
 export function Player(props: any) {
 	const [isPlaying, setIsPlaying] = useState(false);
+	const [audioSource, setAudioSource] = useState<HTMLAudioElement>();
 	const audioElement = useRef<HTMLAudioElement | null>();
-	const audioRef = useRef({
-		context: new AudioContext(),
-	});
 
-	// useEffect(() => {
-	// 	const mediaElement = audioRef.current.context.createMediaElementSource(
-	// 		audioElement.current
-	// 	);
-	// 	mediaElement.connect(audioRef.current.context.destination);
-	// }, []);
+	useEffect(() => {}, []);
 
 	const togglePlayPause = () => {
 		setIsPlaying(!isPlaying);
-	};
-
-	useEffect(() => {
-		if (isPlaying) {
+		if (!isPlaying) {
+			const audioCtx = new AudioContext();
+			const out = audioCtx.destination;
+			const mediaSource = audioCtx.createMediaElementSource(
+				audioElement.current
+			);
+			const analyser = audioCtx.createAnalyser();
+			mediaSource.connect(analyser);
+			analyser.connect(out);
+			// analyser.fftSize = 16384;
+			// const bufferLength = analyser.frequencyBinCount;
+			// console.log(bufferLength);
+			// const dataArray = new Uint8Array(bufferLength);
+			// const arr = analyser.getByteFrequencyData(dataArray);
+			// console.log(arr);
 			audioElement.current.play();
-		} else if (!isPlaying) {
+		} else if (isPlaying) {
 			audioElement.current.pause();
 		}
-	}, [isPlaying]);
+	};
+
+	// useEffect(() => {
+	// 	if (isPlaying) {
+	// 		const audioCtx = new AudioContext();
+	// 		const out = audioCtx.destination;
+	// 		const mediaSource = audioCtx.createMediaElementSource(audioElement.current);
+	// 		const analyser = audioCtx.createAnalyser();
+	// 		mediaSource.connect(analyser);
+	// 		analyser.connect(out);
+	// 		audio.play();
+	// 	} else if (!isPlaying) {
+	// 		audio.pause();
+	// 	}
+	// }, [isPlaying]);
 
 	return (
 		<div className="player">
