@@ -56,23 +56,23 @@ export function Player(props: any) {
 		console.log(dataArray.current);
 		analyser.getByteTimeDomainData(dataArray.current);
 		const bass = dataArray.current.filter((x) => x > 185).length;
-		setLoud(bass / 45);
-		const treble = dataArray.current.filter((x) => x < 150 && x > 140).length;
-		setTreble(treble / 160);
+		setLoud(bass / 70);
+		// const treble = dataArray.current.filter((x) => x < 150 && x > 140).length;
+		// setTreble(treble / 160);
 	};
 
 	return (
 		<div
 			className="player"
 			style={{
-				boxShadow: "0px 0px 60px " + loud + "px #42445a",
+				boxShadow: "0px 0px 40px " + loud + "px #42445a",
 			}}
 		>
 			<div
 				className="trebleShadow"
-				style={{
-					boxShadow: "0px 0px 100px " + treble + "px #c429b0",
-				}}
+				// style={{
+				// 	boxShadow: "0px 0px 100px " + treble + "px #c429b0",
+				// }}
 			></div>
 			<AlbumPic />
 			{/* <ProgresBar isPlaying={isPlaying} /> */}
