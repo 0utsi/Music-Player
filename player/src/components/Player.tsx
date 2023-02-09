@@ -13,6 +13,7 @@ export function Player(props: any) {
 	const audioElement = useRef<HTMLAudioElement | null>();
 	const [ctxEx, setCtxEx] = useState(false);
 	const [loud, setLoud] = useState<number>();
+	const [treble, setTreble] = useState<number>();
 	const [bufferLength, setBufferLength] = useState<number>();
 	const dataArray = useRef<Uint8Array>();
 
@@ -25,24 +26,22 @@ export function Player(props: any) {
 			const mediaSource = audioCtx.createMediaElementSource(
 				audioElement.current
 			);
-			// const delay = audioCtx.createDelay(10);
-			// delay.delayTime.value = 5;
+
 			setAnalyser(analyser);
 			const filter = audioCtx.createBiquadFilter();
 			filter.type = "bandpass";
-			// filter.frequency.setTargetAtTime(500, audioCtx.currentTime, 1);
-			// delay.delayTime.setValueAtTime(50, audioCtx.currentTime);
+			filter.frequency.setTargetAtTime(1500, audioCtx.currentTime, 1);
 
 			const bufferLength = analyser.frequencyBinCount;
 			setBufferLength(bufferLength);
+
 			const array = new Uint8Array(bufferLength);
 			dataArray.current = array;
 
-			// mediaSource.connect(delay);
-			filter.connect(audioCtx.destination);
-			mediaSource.connect(analyser);
-			mediaSource.connect(filter);
 			analyser.connect(audioCtx.destination);
+			filter.connect(audioCtx.destination);
+			mediaSource.connect(analyser).connect(filter);
+
 			audioElement.current.play();
 			setCtxEx(true);
 		} else if (isPlaying) {
@@ -54,9 +53,12 @@ export function Player(props: any) {
 
 	const setArray = () => {
 		analyser.getByteFrequencyData(dataArray.current);
+		console.log(dataArray.current);
 		analyser.getByteTimeDomainData(dataArray.current);
-		const ile = dataArray.current.filter((x) => x > 190).length;
-		setLoud(ile / 50);
+		const bass = dataArray.current.filter((x) => x > 185).length;
+		setLoud(bass / 45);
+		const treble = dataArray.current.filter((x) => x < 150 && x > 140).length;
+		setTreble(treble / 160);
 	};
 
 	return (
@@ -66,8 +68,14 @@ export function Player(props: any) {
 				boxShadow: "0px 0px 60px " + loud + "px #42445a",
 			}}
 		>
+			<div
+				className="trebleShadow"
+				style={{
+					boxShadow: "0px 0px 100px " + treble + "px #c429b0",
+				}}
+			></div>
 			<AlbumPic />
-			<ProgresBar isPlaying={isPlaying} />
+			{/* <ProgresBar isPlaying={isPlaying} /> */}
 			<audio ref={audioElement} src={typebeat} onTimeUpdate={setArray} />
 			<Controls togglePlayPause={togglePlayPause} isPlaying={isPlaying} />
 		</div>
