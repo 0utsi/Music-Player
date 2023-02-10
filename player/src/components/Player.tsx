@@ -12,15 +12,13 @@ export function Player(props: any) {
 	const [analyser, setAnalyser] = useState<AnalyserNode>();
 	const audioElement = useRef<HTMLAudioElement | null>();
 	const [ctxEx, setCtxEx] = useState(false);
-	const [loud, setLoud] = useState<number>();
-	const [treble, setTreble] = useState<number>();
-	const [bufferLength, setBufferLength] = useState<number>();
-	const dataArray = useRef<Uint8Array>();
+	const [loud, setLoud] = useState<number>(0);
+	const freqData = useRef<Uint8Array>();
 
 	const togglePlayPause = () => {
 		setIsPlaying(!isPlaying);
 		if (!isPlaying && !ctxEx) {
-			const audioCtx = new AudioContext({ latencyHint: 100 });
+			const audioCtx = new AudioContext({ latencyHint: 20 });
 			console.log(audioCtx.baseLatency);
 			const analyser = new AnalyserNode(audioCtx, { fftSize: 32768 });
 			const mediaSource = audioCtx.createMediaElementSource(
@@ -30,13 +28,13 @@ export function Player(props: any) {
 			setAnalyser(analyser);
 			const filter = audioCtx.createBiquadFilter();
 			filter.type = "bandpass";
-			filter.frequency.setTargetAtTime(1500, audioCtx.currentTime, 1);
+			filter.frequency.setTargetAtTime(200, audioCtx.currentTime, 0);
+			filter.gain.setValueAtTime(100, audioCtx.currentTime);
 
 			const bufferLength = analyser.frequencyBinCount;
-			setBufferLength(bufferLength);
 
 			const array = new Uint8Array(bufferLength);
-			dataArray.current = array;
+			freqData.current = array;
 
 			analyser.connect(audioCtx.destination);
 			filter.connect(audioCtx.destination);
@@ -52,27 +50,24 @@ export function Player(props: any) {
 	};
 
 	const setArray = () => {
-		analyser.getByteFrequencyData(dataArray.current);
-		console.log(dataArray.current);
-		analyser.getByteTimeDomainData(dataArray.current);
-		const bass = dataArray.current.filter((x) => x > 185).length;
-		setLoud(bass / 70);
-		// const treble = dataArray.current.filter((x) => x < 150 && x > 140).length;
-		// setTreble(treble / 160);
+		analyser.getByteFrequencyData(freqData.current);
+		analyser.getByteTimeDomainData(freqData.current);
+		const bass = freqData.current.filter((x) => x > 200).length;
+		setLoud(bass / 49);
 	};
 
 	return (
 		<div
 			className="player"
 			style={{
-				boxShadow: "0px 0px 40px " + loud + "px #42445a",
+				boxShadow: "0px 0px 70px " + loud + "px #42445a",
 			}}
 		>
 			<div
-				className="trebleShadow"
-				// style={{
-				// 	boxShadow: "0px 0px 100px " + treble + "px #c429b0",
-				// }}
+				className="insideShadow"
+				style={{
+					boxShadow: "inset 0 0 60px " + loud / 4.5 + "px #42445a",
+				}}
 			></div>
 			<AlbumPic />
 			{/* <ProgresBar isPlaying={isPlaying} /> */}

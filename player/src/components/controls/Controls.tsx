@@ -33,8 +33,12 @@ export function Controls(props: any) {
 				</button>
 			</div>
 			<div className="player-footer">
-				<FontAwesomeIcon className="footerIcon" icon={faHeart} />
-				<FontAwesomeIcon className="footerIcon" icon={faShuffle} />
+				<FontAwesomeIcon className="footerIcon heartIcon" icon={faHeart} />
+				<FontAwesomeIcon
+					className="shuffleIcon"
+					style={{ opacity: "0.5" }}
+					icon={faShuffle}
+				/>
 				<FontAwesomeIcon className="footerIcon" icon={faArrowRotateRight} />
 				<FontAwesomeIcon className="footerIcon" icon={faSliders} />
 			</div>
