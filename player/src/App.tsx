@@ -1,4 +1,5 @@
 import { Player } from "./components/Player";
+import { AudioContext } from "./providers/AudioProvider";
 
 function App() {
 	return (
