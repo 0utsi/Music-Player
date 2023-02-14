@@ -1,0 +1,42 @@
+
+.eq {
+	display:flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 30%;
+	gap: 0.2rem;
+	width: 80%;
+	height: 9rem;
+	background-color: rgb(39, 40, 56);
+	border-radius: 1rem;
+    padding: 0;
+}
+
+.eqSliders {
+	width: 80%;
+}
+
+input[type="range"] {
+	height: 0.2rem;
+	background-color: rgba(120, 126, 195, 0.216);
+	-webkit-appearance: none;
+
+}
+
+input[type="range"]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	cursor: pointer;
+	height: 0.5rem;
+	width: 0.5rem;
+	border-radius: 50%;
+	background: rgb(44, 45, 59);
+}
+
+.eqLabels {
+	font-size: 0.65rem;
+	font-weight: bold;
+	color: white;
+	margin: 0;
+}

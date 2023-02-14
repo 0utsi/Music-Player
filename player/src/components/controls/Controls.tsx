@@ -9,10 +9,17 @@ import {
 	faShuffle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import { useEffect, useState } from "react";
 import "./Controls.css";
 
 export function Controls(props: any) {
+	const [isLiked, setIsLiked] = useState(false);
+	const likeButtonClasses = ["footerIcon", "heartIcon"];
+
+	if (isLiked) {
+		likeButtonClasses.push("liked");
+	}
+
 	return (
 		<div className="controls">
 			<div className="main-controls">
@@ -33,10 +40,20 @@ export function Controls(props: any) {
 				</button>
 			</div>
 			<div className="player-footer">
-				<FontAwesomeIcon className="footerIcon" icon={faHeart} />
-				<FontAwesomeIcon className="footerIcon" icon={faShuffle} />
-				<FontAwesomeIcon className="footerIcon" icon={faArrowRotateRight} />
-				<FontAwesomeIcon className="footerIcon" icon={faSliders} />
+				<FontAwesomeIcon
+					onClick={() => {
+						setIsLiked(!isLiked);
+					}}
+					className={likeButtonClasses.join(" ")}
+					icon={faHeart}
+				/>
+				<FontAwesomeIcon
+					className="shuffleIcon"
+					style={{ opacity: "0.5" }}
+					icon={faShuffle}
+				/>
+				<FontAwesomeIcon className="repeatIcon" icon={faArrowRotateRight} />
+				<FontAwesomeIcon className="slidersIcon" icon={faSliders} />
 			</div>
 		</div>
 	);
