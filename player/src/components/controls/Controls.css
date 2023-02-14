@@ -142,7 +142,7 @@
 	transform: scale(1.1);
 }
 
-.shuffleIcon {
+.shuffleIcon{
 	transform: scale(1.05);
 	cursor: default;
 	color: rgb(118, 120, 136);
@@ -152,3 +152,16 @@
 	color: #1DB954;
 }
 
+.repeatIcon{
+	transform: scale(1.05);
+	cursor: default;
+	opacity: 0.6;
+	color: rgb(118, 120, 136);
+}
+
+.slidersIcon {
+	transform: scale(1.05);
+	opacity: 0.6;
+	cursor: default;
+	color: rgb(118, 120, 136);
+}

@@ -52,8 +52,8 @@ export function Controls(props: any) {
 					style={{ opacity: "0.5" }}
 					icon={faShuffle}
 				/>
-				<FontAwesomeIcon className="footerIcon" icon={faArrowRotateRight} />
-				<FontAwesomeIcon className="footerIcon" icon={faSliders} />
+				<FontAwesomeIcon className="repeatIcon" icon={faArrowRotateRight} />
+				<FontAwesomeIcon className="slidersIcon" icon={faSliders} />
 			</div>
 		</div>
 	);

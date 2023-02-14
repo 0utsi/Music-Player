@@ -2,11 +2,7 @@ import { Controls } from "./controls/Controls";
 import { AlbumPic } from "./AlbumPic/AlbumPic";
 import { useState, useRef, useEffect, useContext } from "react";
 import "./Player.css";
-import { ProgresBar } from "./ProgresBar/ProgresBar";
-import alt from "../songs/alt.mp3";
 import typebeat from "../songs/typebeat.mp3";
-import { Equalizer } from "./Equalizer/Equalizer";
-import audioProvider from "../providers/AudioProvider";
 
 export function Player(props: any) {
 	const [isPlaying, setIsPlaying] = useState(false);
@@ -30,10 +26,6 @@ export function Player(props: any) {
 			const mediaSource = audioCtx.createMediaElementSource(
 				audioElement.current
 			);
-
-			const audioProvider = useContext(AudioContext);
-
-			// gainNode.gain.setTargetAtTime(volume, audioCtx.currentTime, 0.01);
 
 			const filter = audioCtx.createBiquadFilter();
 			filter.type = "lowpass";
