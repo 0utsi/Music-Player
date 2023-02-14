@@ -135,16 +135,11 @@
 	cursor: pointer;
 }
 
-.footerIcon:hover {
-	transition: all 0.5s;
-	transform: scale(1.1);
-	color: white;
-}
 
 .heartIcon:active {
-	color: green;
+	color: #1DB954;
 	transition: all 0.5s;
-
+	transform: scale(1.1);
 }
 
 .shuffleIcon {
@@ -152,3 +147,8 @@
 	cursor: default;
 	color: rgb(118, 120, 136);
 }
+
+.liked{
+	color: #1DB954;
+}
+

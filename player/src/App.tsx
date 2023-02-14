@@ -1,11 +1,10 @@
 import { Player } from "./components/Player";
+import { AudioContext } from "./providers/AudioProvider";
 
 function App() {
 	return (
 		<div className="App">
-			<Player>
-				<span></span>
-			</Player>
+			<Player />
 		</div>
 	);
 }
