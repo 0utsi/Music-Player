@@ -1,60 +1,21 @@
 import { Controls } from "./controls/Controls";
 import { AlbumPic } from "./AlbumPic/AlbumPic";
 import { useState, useRef, useEffect, useContext } from "react";
+import { AudioContextCtx } from "../providers/AudioContextProvider";
 import "./Player.css";
-import typebeat from "../songs/typebeat.mp3";
 
 export function Player(props: any) {
-	const [isPlaying, setIsPlaying] = useState(false);
-	const [analyser, setAnalyser] = useState<AnalyserNode>();
-	const audioElement = useRef<HTMLAudioElement | null>();
-	const [audioCtx, setAudioCtx] = useState<AudioContext>();
 	const [loud, setLoud] = useState<number>(0);
-	const freqData = useRef<Uint8Array>();
-	const [volume, setVolume] = useState<number>();
-	const [gain, setGain] = useState<GainNode>();
 
-	const togglePlayPause = () => {
-		setIsPlaying(!isPlaying);
-		if (!isPlaying && !audioCtx) {
-			const audioCtx = new AudioContext({ latencyHint: 50 });
-			setAudioCtx(audioCtx);
-			const analyser = new AnalyserNode(audioCtx, { fftSize: 32768 });
-			setAnalyser(analyser);
-			const gainNode = new GainNode(audioCtx, { gain: volume });
-			setGain(gainNode);
-			const mediaSource = audioCtx.createMediaElementSource(
-				audioElement.current
-			);
+	const { frequencyData } = useContext(AudioContextCtx);
 
-			const filter = audioCtx.createBiquadFilter();
-			filter.type = "lowpass";
-			filter.frequency.setTargetAtTime(1000, audioCtx.currentTime, 0);
-			filter.gain.setValueAtTime(1000, audioCtx.currentTime);
-
-			const bufferLength = analyser.frequencyBinCount;
-			const array = new Uint8Array(bufferLength);
-			freqData.current = array;
-
-			1; // gainNode.connect(audioCtx.destination);
-			analyser.connect(audioCtx.destination);
-			filter.connect(audioCtx.destination);
-			mediaSource.connect(analyser).connect(filter).connect(gainNode);
-
-			audioElement.current.play();
-		} else if (isPlaying) {
-			audioElement.current.pause();
-		} else if (!isPlaying && audioCtx) {
-			audioElement.current.play();
+	useEffect(() => {
+		if (frequencyData) {
+			const bass = frequencyData.filter((x: number) => x > 200).length;
+			console.log(bass);
+			setLoud(bass / 60);
 		}
-	};
-
-	const setArray = () => {
-		analyser.getByteFrequencyData(freqData.current);
-		analyser.getByteTimeDomainData(freqData.current);
-		const bass = freqData.current.filter((x) => x > 200).length;
-		setLoud(bass / 90);
-	};
+	}, [frequencyData]);
 
 	return (
 		<div
@@ -71,8 +32,8 @@ export function Player(props: any) {
 			></div>
 			<AlbumPic />
 			{/* <ProgresBar isPlaying={isPlaying} /> */}
-			<audio ref={audioElement} src={typebeat} onTimeUpdate={setArray} />
-			<Controls togglePlayPause={togglePlayPause} isPlaying={isPlaying} />
+			{/* <audio ref={audioElement} src={typebeat} onTimeUpdate={setArray} /> */}
+			<Controls />
 			{/* <Equalizer volume={volume} setVolume={setVolume}></Equalizer> */}
 		</div>
 	);

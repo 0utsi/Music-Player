@@ -22,7 +22,6 @@ input[type="range"] {
 	height: 0.2rem;
 	background-color: rgba(120, 126, 195, 0.216);
 	-webkit-appearance: none;
-
 }
 
 input[type="range"]::-webkit-slider-thumb {

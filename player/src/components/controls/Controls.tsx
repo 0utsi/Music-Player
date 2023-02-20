@@ -9,12 +9,14 @@ import {
 	faShuffle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./Controls.css";
+import { AudioContextCtx } from "../../providers/AudioContextProvider";
 
 export function Controls(props: any) {
 	const [isLiked, setIsLiked] = useState(false);
 	const likeButtonClasses = ["footerIcon", "heartIcon"];
+	const { playAudio, isPlaying } = useContext(AudioContextCtx);
 
 	if (isLiked) {
 		likeButtonClasses.push("liked");
@@ -26,13 +28,11 @@ export function Controls(props: any) {
 				<button className="previous">
 					<FontAwesomeIcon className="prevIcon" icon={faBackward} />
 				</button>
-				<button className="play-pause" onClick={props.togglePlayPause}>
-					{!props.isPlaying ? (
+				<button className="play-pause" onClick={playAudio}>
+					{!isPlaying ? (
 						<FontAwesomeIcon className="playIcon" icon={faPlay} />
 					) : (
-						props.isPlaying && (
-							<FontAwesomeIcon className="playIcon" icon={faPause} />
-						)
+						isPlaying && <FontAwesomeIcon className="playIcon" icon={faPause} />
 					)}
 				</button>
 				<button className="next">
