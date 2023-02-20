@@ -135,6 +135,11 @@
 	cursor: pointer;
 }
 
+.heartIcon:hover {
+	transform: scale(1.1);
+	color: #1DB954;
+}
+
 
 .heartIcon:active {
 	color: #1DB954;
@@ -161,7 +166,11 @@
 
 .slidersIcon {
 	transform: scale(1.05);
-	opacity: 0.6;
-	cursor: default;
+	cursor: pointer;
 	color: rgb(118, 120, 136);
+}
+
+.slidersIcon:hover {
+	transform: scale(1.1);
+	color: white;
 }

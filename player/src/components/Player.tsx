@@ -1,17 +1,24 @@
 import { Controls } from "./controls/Controls";
 import { AlbumPic } from "./AlbumPic/AlbumPic";
+import { ProgresBar } from "./ProgresBar/ProgresBar";
+import { Equalizer } from "./Equalizer/Equalizer";
 import { useState, useRef, useEffect, useContext } from "react";
 import { AudioContextCtx } from "../providers/AudioContextProvider";
 import "./Player.css";
 
-export function Player(props: any) {
+export function Player() {
 	const [loud, setLoud] = useState<number>(0);
-
+	const [equalizer, setEqualizer] = useState(false);
 	const { frequencyData } = useContext(AudioContextCtx);
 
+	const showEq = () => {
+		setEqualizer(!equalizer);
+	};
+
+	//Visualisation
 	useEffect(() => {
 		if (frequencyData) {
-			const bass = frequencyData.filter((x: number) => x > 200).length;
+			const bass = frequencyData.filter((x: number) => x > 210).length;
 			console.log(bass);
 			setLoud(bass / 60);
 		}
@@ -31,10 +38,9 @@ export function Player(props: any) {
 				}}
 			></div>
 			<AlbumPic />
-			{/* <ProgresBar isPlaying={isPlaying} /> */}
-			{/* <audio ref={audioElement} src={typebeat} onTimeUpdate={setArray} /> */}
-			<Controls />
-			{/* <Equalizer volume={volume} setVolume={setVolume}></Equalizer> */}
+			{/* <ProgresBar /> */}
+			<Controls showEq={showEq} />
+			{equalizer && <Equalizer />}
 		</div>
 	);
 }

@@ -53,7 +53,11 @@ export function Controls(props: any) {
 					icon={faShuffle}
 				/>
 				<FontAwesomeIcon className="repeatIcon" icon={faArrowRotateRight} />
-				<FontAwesomeIcon className="slidersIcon" icon={faSliders} />
+				<FontAwesomeIcon
+					onClick={props.showEq}
+					className="slidersIcon"
+					icon={faSliders}
+				/>
 			</div>
 		</div>
 	);
