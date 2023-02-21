@@ -18,8 +18,8 @@ export function Player() {
 	//Visualisation
 	useEffect(() => {
 		if (frequencyData) {
-			const bass = frequencyData.filter((x: number) => x > 210).length;
-			console.log(bass);
+			const bass = frequencyData.filter((x: number) => x > 230).lengt1h;
+
 			setLoud(bass / 60);
 		}
 	}, [frequencyData]);

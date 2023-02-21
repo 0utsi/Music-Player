@@ -1,5 +1,15 @@
 import "./Equalizer.css";
-export function Equalizer(props) {
+import { useContext, useState } from "react";
+import { AudioContextCtx } from "../../providers/AudioContextProvider";
+export function Equalizer() {
+	const { changeVolume } = useContext(AudioContextCtx);
+
+	const handleChangeVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const volume = parseFloat(e.target.value);
+		console.log(volume);
+		changeVolume(volume);
+	};
+
 	return (
 		<div className="eq">
 			<label className="eqLabels">Volume</label>
@@ -7,13 +17,12 @@ export function Equalizer(props) {
 				type="range"
 				min="0"
 				max="1"
-				value={props.volume}
 				step=".01"
-				onChange={(e) => {
-					return props.setVolume(parseFloat(e.target.value));
-				}}
 				className="eqSliders"
+				defaultValue="50"
+				onChange={handleChangeVolume}
 			/>
+			{}
 			<label className="eqLabels">Bass</label>
 			<input type="range" min="-10" max="10" value="0" className="eqSliders" />
 			<label className="eqLabels">Treble</label>

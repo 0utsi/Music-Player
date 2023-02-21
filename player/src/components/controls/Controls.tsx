@@ -48,6 +48,7 @@ export function Controls(props: any) {
 					icon={faHeart}
 				/>
 				<FontAwesomeIcon
+					title="Not available yet!"
 					className="shuffleIcon"
 					style={{ opacity: "0.5" }}
 					icon={faShuffle}
