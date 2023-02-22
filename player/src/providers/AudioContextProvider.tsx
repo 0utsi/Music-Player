@@ -6,6 +6,7 @@ const AudioContextCtx = createContext({
 	changeVolume: (volume) => {},
 	isPlaying: false,
 	frequencyData: null,
+	setTrebleLevel: null,
 });
 
 function AudioContextProvider({ children }) {
@@ -13,8 +14,10 @@ function AudioContextProvider({ children }) {
 	const [analyser, setAnalyser] = useState<AnalyserNode>();
 	const [audio, setAudio] = useState<HTMLAudioElement>();
 	const [gain, setGain] = useState<GainNode>();
+	const [trebleEq, setTrebleEq] = useState<BiquadFilterNode>();
 	const [isPlaying, setIsPlaying] = useState<boolean>();
 	const [frequencyData, setFrequencyData] = useState<Uint8Array | null>(null);
+	const [trebleLevel, setTrebleLevel] = useState<number>(0);
 
 	const playAudio = () => {
 		setIsPlaying(!isPlaying);
@@ -25,12 +28,20 @@ function AudioContextProvider({ children }) {
 			setAnalyser(analyser);
 			const audio = new Audio(typebeat);
 			setAudio(audio);
-			const gainNode = new GainNode(audioCtx, { gain: 0.5 });
+			const gainNode = new GainNode(audioCtx, { gain: 0.9 });
 			setGain(gainNode);
+			const trebleFilter = audioCtx.createBiquadFilter();
+			setTrebleEq(trebleFilter);
+			trebleFilter.type = "highshelf";
+			trebleFilter.frequency.value = 2000;
 
 			const source = audioCtx.createMediaElementSource(audio);
 			analyser.connect(audioCtx.destination);
-			source.connect(gainNode).connect(analyser).connect(audioCtx.destination);
+			source
+				.connect(trebleFilter)
+				.connect(gainNode)
+				.connect(analyser)
+				.connect(audioCtx.destination);
 
 			audio.play();
 			setIsPlaying(true);
@@ -65,7 +76,13 @@ function AudioContextProvider({ children }) {
 
 	return (
 		<AudioContextCtx.Provider
-			value={{ playAudio, changeVolume, isPlaying, frequencyData }}
+			value={{
+				playAudio,
+				changeVolume,
+				isPlaying,
+				frequencyData,
+				setTrebleLevel,
+			}}
 		>
 			{children}
 		</AudioContextCtx.Provider>
