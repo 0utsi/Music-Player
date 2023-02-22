@@ -19,10 +19,9 @@ export function Equalizer() {
 				max="1"
 				step=".01"
 				className="eqSliders"
-				defaultValue="50"
+				defaultValue="0.5"
 				onChange={handleChangeVolume}
 			/>
-			{}
 			<label className="eqLabels">Bass</label>
 			<input type="range" min="-10" max="10" value="0" className="eqSliders" />
 			<label className="eqLabels">Treble</label>

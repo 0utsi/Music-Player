@@ -6,7 +6,6 @@ const AudioContextCtx = createContext({
 	changeVolume: (volume) => {},
 	isPlaying: false,
 	frequencyData: null,
-	audioCtx: null,
 });
 
 function AudioContextProvider({ children }) {
@@ -31,7 +30,7 @@ function AudioContextProvider({ children }) {
 
 			const source = audioCtx.createMediaElementSource(audio);
 			analyser.connect(audioCtx.destination);
-			source.connect(analyser).connect(gainNode).connect(audioCtx.destination);
+			source.connect(gainNode).connect(analyser).connect(audioCtx.destination);
 
 			audio.play();
 			setIsPlaying(true);
@@ -46,13 +45,14 @@ function AudioContextProvider({ children }) {
 		gain.gain.setTargetAtTime(volume, audioCtx.currentTime, 0.1);
 	};
 
-	// Get array of decibels
+	// Get array of high decibels
 	useEffect(() => {
 		let intervalId: number;
 		const updateFrequencyData = () => {
 			const data = new Uint8Array(analyser.frequencyBinCount);
 			analyser.getByteFrequencyData(data);
 			analyser.getByteTimeDomainData(data);
+			console.log(data);
 			setFrequencyData(data);
 		};
 		if (isPlaying) {
@@ -65,7 +65,7 @@ function AudioContextProvider({ children }) {
 
 	return (
 		<AudioContextCtx.Provider
-			value={{ playAudio, changeVolume, isPlaying, frequencyData, audioCtx }}
+			value={{ playAudio, changeVolume, isPlaying, frequencyData }}
 		>
 			{children}
 		</AudioContextCtx.Provider>
