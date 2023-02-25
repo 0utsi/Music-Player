@@ -6,7 +6,7 @@ const AudioContextCtx = createContext({
 	changeVolume: (volume) => {},
 	isPlaying: false,
 	frequencyData: null,
-	setTrebleLevel: null,
+	volume: null,
 });
 
 function AudioContextProvider({ children }) {
@@ -14,34 +14,28 @@ function AudioContextProvider({ children }) {
 	const [analyser, setAnalyser] = useState<AnalyserNode>();
 	const [audio, setAudio] = useState<HTMLAudioElement>();
 	const [gain, setGain] = useState<GainNode>();
-	const [trebleEq, setTrebleEq] = useState<BiquadFilterNode>();
 	const [isPlaying, setIsPlaying] = useState<boolean>();
 	const [frequencyData, setFrequencyData] = useState<Uint8Array | null>(null);
-	const [trebleLevel, setTrebleLevel] = useState<number>(0);
+	const [volume, setVolume] = useState<number>(0.5);
 
 	const playAudio = () => {
 		setIsPlaying(!isPlaying);
 		if (!audioCtx && !isPlaying) {
-			const audioCtx = new AudioContext({ latencyHint: 30 });
+			const audioCtx = new AudioContext({ latencyHint: 40 });
 			setAudioCtx(audioCtx);
-			const analyser = new AnalyserNode(audioCtx, { fftSize: 32768 });
+			// Visualisation
+			const analyser = new AnalyserNode(audioCtx, { fftSize: 16384 });
 			setAnalyser(analyser);
+			//Audio
 			const audio = new Audio(typebeat);
 			setAudio(audio);
-			const gainNode = new GainNode(audioCtx, { gain: 0.9 });
+			//Volume
+			const gainNode = new GainNode(audioCtx, { gain: 0.5 });
 			setGain(gainNode);
-			const trebleFilter = audioCtx.createBiquadFilter();
-			setTrebleEq(trebleFilter);
-			trebleFilter.type = "highshelf";
-			trebleFilter.frequency.value = 2000;
 
 			const source = audioCtx.createMediaElementSource(audio);
 			analyser.connect(audioCtx.destination);
-			source
-				.connect(trebleFilter)
-				.connect(gainNode)
-				.connect(analyser)
-				.connect(audioCtx.destination);
+			source.connect(analyser).connect(gain).connect(audioCtx.destination);
 
 			audio.play();
 			setIsPlaying(true);
@@ -53,17 +47,17 @@ function AudioContextProvider({ children }) {
 	};
 
 	const changeVolume = (volume: number) => {
-		gain.gain.setTargetAtTime(volume, audioCtx.currentTime, 0.1);
+		if (gain) gain.gain.setTargetAtTime(volume, audioCtx.currentTime, 0.5);
+		console.log(volume);
+		setVolume(volume);
 	};
 
-	// Get array of high decibels
+	// Get decibels
 	useEffect(() => {
 		let intervalId: number;
 		const updateFrequencyData = () => {
 			const data = new Uint8Array(analyser.frequencyBinCount);
 			analyser.getByteFrequencyData(data);
-			analyser.getByteTimeDomainData(data);
-			console.log(data);
 			setFrequencyData(data);
 		};
 		if (isPlaying) {
@@ -81,7 +75,7 @@ function AudioContextProvider({ children }) {
 				changeVolume,
 				isPlaying,
 				frequencyData,
-				setTrebleLevel,
+				volume,
 			}}
 		>
 			{children}

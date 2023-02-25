@@ -9,19 +9,18 @@ import "./Player.css";
 export function Player() {
 	const [loud, setLoud] = useState<number>(0);
 	const [equalizer, setEqualizer] = useState(false);
-	const { frequencyData } = useContext(AudioContextCtx);
-	const [multiplier, setMultiplier] = useState();
+	const { frequencyData, volume } = useContext(AudioContextCtx);
 
 	const showEq = () => {
 		setEqualizer(!equalizer);
+		console.log(volume);
 	};
 
 	//Visualisation
 	useEffect(() => {
 		if (frequencyData) {
-			const bass = frequencyData.filter((x: number) => x > 160).length;
-			// console.log(bass);
-			setLoud(bass / 70);
+			const bass = frequencyData.filter((x: number) => x > 170).length;
+			setLoud(bass / 2);
 		}
 	}, [frequencyData]);
 

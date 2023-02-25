@@ -1,16 +1,13 @@
 import "./Equalizer.css";
 import { useContext, useState } from "react";
 import { AudioContextCtx } from "../../providers/AudioContextProvider";
-export function Equalizer() {
-	const { changeVolume, setTrebleLevel } = useContext(AudioContextCtx);
-	const [multiplier, setMultiplier] = useState();
+export function Equalizer(props) {
+	const { changeVolume } = useContext(AudioContextCtx);
 
-	const handleChangeVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const volume = parseFloat(e.target.value);
-		const volMultiplier = 100 / volume;
-		console.log(volMultiplier);
-		changeVolume(volume);
-	};
+	// const handleChangeVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
+	// 	const volume = parseFloat(e.target.value);
+	// 	changeVolume(volume);
+	// };
 
 	return (
 		<div className="eq">
@@ -21,18 +18,7 @@ export function Equalizer() {
 				max="1"
 				step=".01"
 				className="eqSliders"
-				defaultValue="0.5"
-				onChange={handleChangeVolume}
-			/>
-			<label className="eqLabels">Bass</label>
-			<input type="range" min="-10" max="10" value="0" className="eqSliders" />
-			<label className="eqLabels">Treble</label>
-			<input
-				type="range"
-				min="-10"
-				max="10"
-				step="1"
-				onChange={(event) => setTrebleLevel(parseInt(event.target.value))}
+				onChange={(event) => changeVolume(parseFloat(event.target.value))}
 			/>
 		</div>
 	);
