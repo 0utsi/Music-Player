@@ -21,7 +21,7 @@ function AudioContextProvider({ children }) {
 	const playAudio = () => {
 		setIsPlaying(!isPlaying);
 		if (!audioCtx && !isPlaying) {
-			const audioCtx = new AudioContext({ latencyHint: 40 });
+			const audioCtx = new AudioContext({ latencyHint: 30 });
 			setAudioCtx(audioCtx);
 			// Visualisation
 			const analyser = new AnalyserNode(audioCtx, { fftSize: 16384 });
@@ -30,7 +30,7 @@ function AudioContextProvider({ children }) {
 			const audio = new Audio(typebeat);
 			setAudio(audio);
 			//Volume
-			const gainNode = new GainNode(audioCtx, { gain: 0.5 });
+			const gainNode = new GainNode(audioCtx, { gain: volume });
 			setGain(gainNode);
 
 			const source = audioCtx.createMediaElementSource(audio);
@@ -47,9 +47,9 @@ function AudioContextProvider({ children }) {
 	};
 
 	const changeVolume = (volume: number) => {
-		if (gain) gain.gain.setTargetAtTime(volume, audioCtx.currentTime, 0.5);
+		gain.gain.setTargetAtTime(volume, audioCtx.currentTime, 0.01);
 		console.log(volume);
-		setVolume(volume);
+		// setVolume(volume);
 	};
 
 	// Get decibels
