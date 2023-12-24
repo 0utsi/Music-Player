@@ -5,7 +5,7 @@ import { Equalizer } from "./Equalizer/Equalizer";
 import { useState, useRef, useEffect, useContext } from "react";
 import { AudioContextCtx } from "../providers/AudioContextProvider";
 import "./Player.css";
-
+import AudioVisualizer from "./Visualizer/Visualizer";
 export function Player() {
 	const [loud, setLoud] = useState<number>(0);
 	const [equalizer, setEqualizer] = useState(false);
@@ -19,12 +19,14 @@ export function Player() {
 	//Visualisation
 	useEffect(() => {
 		if (frequencyData) {
-			const bass = frequencyData.filter((x: number) => x > 170).length;
-			setLoud(bass / 2);
+			const bass = frequencyData.filter((x: number) => x > 190 && x < 240).length;
+			setLoud(bass / 1.5);
+			console.log(bass)
 		}
 	}, [frequencyData]);
 
 	return (
+		<>
 		<div
 			className="player"
 			style={{
@@ -34,7 +36,7 @@ export function Player() {
 			<div
 				className="insideShadow"
 				style={{
-					boxShadow: "inset 0 0 40px " + loud / 1.5 + "px #42445a",
+					boxShadow: "inset 0 0 40px " + loud / 2 + "px #42445a",
 				}}
 			></div>
 			<AlbumPic />
@@ -42,5 +44,7 @@ export function Player() {
 			<Controls showEq={showEq} />
 			{equalizer && <Equalizer />}
 		</div>
+		<AudioVisualizer />
+		</>
 	);
 }

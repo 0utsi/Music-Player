@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import typebeat from "../songs/typeBeat.mp3";
-
+import FUCK from '../songs/FUCK.mp3'
+import jadu from '../songs/jadu.mp3'
 const AudioContextCtx = createContext({
 	playAudio: () => {},
 	changeVolume: (volume) => {},
@@ -21,7 +22,7 @@ function AudioContextProvider({ children }) {
 	const playAudio = () => {
 		setIsPlaying(!isPlaying);
 		if (!audioCtx && !isPlaying) {
-			const audioCtx = new AudioContext({ latencyHint: 30 });
+			const audioCtx = new AudioContext({ latencyHint: 50 });
 			setAudioCtx(audioCtx);
 			// Visualisation
 			const analyser = new AnalyserNode(audioCtx, { fftSize: 16384 });
@@ -59,9 +60,10 @@ function AudioContextProvider({ children }) {
 			const data = new Uint8Array(analyser.frequencyBinCount);
 			analyser.getByteFrequencyData(data);
 			setFrequencyData(data);
+			console.log(data)
 		};
 		if (isPlaying) {
-			intervalId = setInterval(updateFrequencyData, 50);
+			intervalId = setInterval(updateFrequencyData, 100);
 		}
 		return () => {
 			clearInterval(intervalId);
